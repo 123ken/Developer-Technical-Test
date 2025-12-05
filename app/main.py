@@ -2,8 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
 from app.routers.task import router as task_router
+from app.seed_db import seed_db
 
 Base.metadata.create_all(bind=engine)
+
+seed_db()
 
 app = FastAPI()
 
