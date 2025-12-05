@@ -6,6 +6,7 @@ function App() {
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('pending');
   const [dueDate, setDueDate] = useState('');
+  const [message, setMessage] = useState('');
 
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
@@ -34,7 +35,7 @@ function App() {
       setDueDate('');
 
     } catch (error) {
-      console.error('Error:', error);
+      setMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
@@ -65,6 +66,7 @@ function App() {
         <br />
         <button type="submit">Add Task</button>
       </form>
+      {message && <p style={{ marginTop: '20px' }}>{message}</p>}
     </div>
   );
 }
