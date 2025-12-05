@@ -7,6 +7,7 @@ function App() {
   const [status, setStatus] = useState('pending');
   const [dueDate, setDueDate] = useState('');
   const [message, setMessage] = useState('');
+  const [createdTask, setCreatedTask] = useState<any>(null);
 
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
@@ -26,7 +27,7 @@ function App() {
       }
 
       const data = await response.json();
-      console.log('Task created:', data);
+      setCreatedTask(data);
 
       // Reset form
       setTitle('');
@@ -67,6 +68,23 @@ function App() {
         <button type="submit">Add Task</button>
       </form>
       {message && <p style={{ marginTop: '20px' }}>{message}</p>}
+      {createdTask && (
+        <div style={{ 
+          marginTop: '20px', 
+          padding: '15px', 
+          border: '1px solid #ccc', 
+          borderRadius: '8px',
+          backgroundColor: '#f9f9f9',
+          textAlign: 'left',
+          color: '#333'
+        }}>
+          <h3 style={{ marginTop: 0 }}>Successfully created task!</h3>
+          <p><strong>Title:</strong> {createdTask.title}</p>
+          <p><strong>Description:</strong> {createdTask.description}</p>
+          <p><strong>Status:</strong> {createdTask.status}</p>
+          <p><strong>Due Date:</strong> {createdTask.due_date}</p>
+        </div>
+      )}
     </div>
   );
 }
