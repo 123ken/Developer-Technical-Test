@@ -8,10 +8,41 @@ function App() {
   const [dueDate, setDueDate] = useState('');
 
 
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    const task = { title, description, status, due_date: dueDate };
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/tasks/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(task)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create task');
+      }
+
+      const data = await response.json();
+      console.log('Task created:', data);
+
+      // Reset form
+      setTitle('');
+      setDescription('');
+      setStatus('pending');
+      setDueDate('');
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
   return (
     <div style={{ maxWidth: 400, margin: '50px auto' }}>
       <h2>Create Task</h2>
-      <form onSubmit={()=> console.log('submit')}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Title:</label><br />
           <input type="text" value={title} onChange={e => setTitle(e.target.value)} required />
