@@ -14,7 +14,7 @@ class TaskResponse(TaskCreate):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 def create_task(db: Session, task: TaskCreate):
