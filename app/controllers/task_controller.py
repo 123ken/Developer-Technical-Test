@@ -13,7 +13,7 @@ class TaskCreate(BaseModel):
 class TaskResponse(TaskCreate):
     id: int
 
-    class Config:
+    class ConfigDict:
         from_attributes = True
 
 
